@@ -7,7 +7,6 @@ antes.depois <- data.frame(read_excel("tabela.xlsx"))
 antes.depois
 str(antes.depois)
 
-
 # Mas hoje usaremos um outra alternativa para variar um pouco
 
 # Tipo 01 - Pareado / Dependentes
