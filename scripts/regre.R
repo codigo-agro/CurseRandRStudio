@@ -19,7 +19,7 @@ print(dados)
 str(dados)
 
 # 06 - Armazenar a variável numa variável nova
-var <- dados$msr
+var <- dados$mspa
 
 # 07 - Armazenando as médias da variável dependente
 medias_var <- tapply(var, dados$trat, mean)
@@ -77,6 +77,7 @@ summary(qua)
 # ----------------------------------------------------
 # ----------------------------------------------------
 
+
 # ----------------------------------------------------
 # 01 - Significância do coeficiente
 # ----------------------------------------------------
@@ -88,7 +89,7 @@ anova(lin)
 anova(qua)
 
 # ----------------------------------------------------
-# 02 - Normalidade dos dados
+# 02 - Normalidade dos resíduos
 # ----------------------------------------------------
 
 # Modelo Linear
@@ -103,7 +104,7 @@ shapiro.test(qua$residuals)
 # 03 - Linearidade - para o modelo linear
 # ----------------------------------------------------
 
-cor(var, dados$trat)
+cor.test(var, dados$trat)
 
 # ----------------------------------------------------
 # 04 - Homocedasticidade
@@ -125,3 +126,33 @@ plot(rstudent(qua) ~ fitted(qua),
 abline(h = 0, 
        lty = 2, 
        col = "red")
+
+
+# ----------------------------------------------------
+# Extra - podemos encontrar o valor máximo ou mínimo de uma função quadrática
+# ----------------------------------------------------
+
+# ----------------------------------------------------
+# Modo 01 - X(max ou min) = -b/2a
+# ----------------------------------------------------
+
+c = qua$coefficients[1]
+
+b = qua$coefficients[2]
+
+a = qua$coefficients[3]
+
+ponto.extremo = - (b / (2 * a))
+
+print(ponto.extremo)
+
+# ----------------------------------------------------
+# Modo 02 - usando a função optimize
+# ----------------------------------------------------
+fx <- function(x) qua$coefficients[1] + qua$coefficients[2]*x + qua$coefficients[3]*x^2
+
+optimize(fx, c(min(medias_doses), max(medias_doses)), maximum=T)
+
+
+
+
